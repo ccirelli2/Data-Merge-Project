@@ -80,6 +80,40 @@ def get_company_name(Dataframe, Position):
     return List_final
 
 
+def clean_zip_code(String, Dataframe):
+    
+    if String == 'DAT_SF':
+        
+        DAT_SF_ZIP = Dataframe['Billing Zip/Postal Code']
+        DAT_SF_Zip_Code_Clean = []
+    
+        for x in DAT_SF_ZIP:
+            x_string = str(x)
+            x_split = x_string.split('-')
+            DAT_SF_Zip_Code_Clean.append((x_split[0]))
+    
+        return DAT_SF_Zip_Code_Clean
+    
+    elif String == 'DAT_CIQ':
+        
+        DAT_CIQ_ZIP = Dataframe['Primary Zip Code/Postal Code']
+        DAT_CIQ_Zip_Code_Clean = []
+    
+        for x in DAT_CIQ_ZIP:
+            x_string = str(x)
+            x_split = x_string.split('-')
+            DAT_CIQ_Zip_Code_Clean.append((x_split[0]))
+    
+        return DAT_CIQ_Zip_Code_Clean
+    
+
+def write_to_excel(dataframe, filename):
+    import pandas as pd
+    writer = pd.ExcelWriter(filename+'.xlsx')
+    dataframe.to_excel(writer, sheet_name = 'Data')
+    writer.save()
+
+
 
 
 
