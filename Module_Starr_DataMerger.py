@@ -109,8 +109,7 @@ def clean_zip_code(String, Dataframe):
 
     
 def get_match(CIQ_Dataframe, SF_Dataframe):
-    
-    
+       
     # Step 1:  Create a list of the col name in question. 
     List_CIQ_zip = [x for x in CIQ_Dataframe['Zip Code Clean']]
     List_SF_zip = [x for x in SF_Dataframe['Zip Code Clean']]
@@ -166,7 +165,9 @@ def get_match(CIQ_Dataframe, SF_Dataframe):
                             SF_limit_sec_coName = SF_Dataframe_limit_by_coName['Company Second Name'] == sec_coName
                             SF_limit_sec_coName = SF_Dataframe_limit_by_coName[SF_limit_sec_coName]
                             
-                    return CIQ_limit_by_sec_coName
+                            Final_SF_Dataframe = SF_limit_sec_coName.append(CIQ_limit_by_sec_coName)
+                            
+        return Final_SF_Dataframe
             
 def write_to_excel(dataframe, filename):
     import pandas as pd
