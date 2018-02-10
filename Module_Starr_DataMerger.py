@@ -107,6 +107,67 @@ def clean_zip_code(String, Dataframe):
         return DAT_CIQ_Zip_Code_Clean
     
 
+    
+def get_match(CIQ_Dataframe, SF_Dataframe):
+    
+    
+    # Step 1:  Create a list of the col name in question. 
+    List_CIQ_zip = [x for x in CIQ_Dataframe['Zip Code Clean']]
+    List_SF_zip = [x for x in SF_Dataframe['Zip Code Clean']]
+    
+    # For each zip code in our CIQ dataframe
+    for zipCode in List_CIQ_zip:
+        
+        # Check to see if there is a match in our List_SF_zip list
+        if zipCode in List_SF_zip:
+            
+        
+            # Step 2: For each match, we are going to narrow our two dataframes by the zipCode. 
+            CIQ_limit_zip = CIQ_Dataframe['Zip Code Clean'] == zipCode
+            CIQ_Dataframe_limit_by_zip = CIQ_Dataframe[CIQ_limit_zip]
+            
+            SF_limit_zip = SF_Dataframe['Zip Code Clean'] == zipCode
+            SF_Dataframe_limit_by_zip = SF_Dataframe[SF_limit_zip]
+            
+            
+            # Repeat Step1: Now that you have your new dataframes limited by the matching zip code, we need to repeat step 1 
+            List_CIQ_coName = [x for x in CIQ_Dataframe_limit_by_zip['Company First Name']]
+            List_SF_coName = [x for x in SF_Dataframe_limit_by_zip['Company First Name']]
+            
+            # Iterate over the List_CIQ_coName list 
+            for coName in List_CIQ_coName:
+                # Check to see if any of these names match the coNames in List_SF_coNames
+                if coName in List_SF_coName:
+                    
+                    
+                    # Repeat Step 2: For each match, we are going to narrow our two dataframes by the Company's First Name. 
+                    CIQ_limit_coName = CIQ_Dataframe_limit_by_zip['Company First Name'] == coName
+                    CIQ_Dataframe_limit_by_coName = CIQ_Dataframe_limit_by_zip[CIQ_limit_coName]
+                    
+                    SF_limit_coName = SF_Dataframe_limit_by_zip['Company First Name'] == coName
+                    SF_Dataframe_limit_by_coName = SF_Dataframe_limit_by_zip[SF_limit_coName]
+            
+                    
+                    # Repeat Step1:  Now that we have identified the matching coNames within the defined zipCode, 
+                    #                we need to iterate over the lists using the sec_coName
+                
+                    List_CIQ_sec_coName = [x for x in CIQ_Dataframe_limit_by_coName['Company Second Name']]
+                    List_SF_sec_coName = [x for x in SF_Dataframe_limit_by_coName['Company Second Name']]
+            
+            
+                    # Iterate over CIQ sec_coName list:
+                    for sec_coName in List_CIQ_sec_coName:
+                        # Check if sec_coName in DF dataframe. 
+                        if sec_coName in List_SF_sec_coName:
+                            
+                            CIQ_limit_sec_coName = CIQ_Dataframe_limit_by_coName['Company Second Name'] == sec_coName
+                            CIQ_limit_by_sec_coName = CIQ_Dataframe_limit_by_coName[CIQ_limit_sec_coName]
+                        
+                            SF_limit_sec_coName = SF_Dataframe_limit_by_coName['Company Second Name'] == sec_coName
+                            SF_limit_sec_coName = SF_Dataframe_limit_by_coName[SF_limit_sec_coName]
+                            
+                    return CIQ_limit_by_sec_coName
+            
 def write_to_excel(dataframe, filename):
     import pandas as pd
     writer = pd.ExcelWriter(filename+'.xlsx')
