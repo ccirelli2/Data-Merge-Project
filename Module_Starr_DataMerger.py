@@ -106,7 +106,7 @@ def clean_zip_Code(Dataframe_str, Dataframe):
     '''
     
     # Identify the target dataframe. 
-    if String == 'DAT_SF':
+    if Dataframe_str == 'DAT_SF':
         
         # Obtain the zipCode column of the SF dataframe 
         DAT_SF_ZIP = Dataframe['Billing Zip/Postal Code']
@@ -128,7 +128,7 @@ def clean_zip_Code(Dataframe_str, Dataframe):
     
     # Note:  the below code repeats the same proces, but for the CIQ dataframe. 
     
-    elif String == 'DAT_CIQ':
+    elif Dataframe_str == 'DAT_CIQ':
         
         DAT_CIQ_ZIP = Dataframe['Primary Zip Code/Postal Code']
         DAT_CIQ_Zip_Code_Clean = []
@@ -137,7 +137,7 @@ def clean_zip_Code(Dataframe_str, Dataframe):
             x_string = str(x)
             x_split = x_string.split('-')
             DAT_CIQ_Zip_Code_Clean.append((x_split[0]))
-    
+            
         return DAT_CIQ_Zip_Code_Clean
     
 
