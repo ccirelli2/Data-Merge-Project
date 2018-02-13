@@ -92,8 +92,10 @@ def get_company_name(Dataframe, Position):
     # Replace any remaining commas with a space.  
     List_final = [x.replace(',','') for x in List_name]
     
+    List_lower = [x.lower() for x in List_final]
+    
     # Return the final list. 
-    return List_final
+    return List_lower
 
 
 def clean_zip_Code(Dataframe_str, Dataframe):
